@@ -30,7 +30,7 @@
 #ifndef FHT_H_
 #define FHT_H_
 
-#define FHT_SYNC_SET_VALUE 255/3 // inital valve opening value
+#define FHT_SYNC_SET_VALUE 255/10 // inital valve opening value
 
 #define FHT_REPEAT			(1 << 7)
 #define FHT_EXT_PRESENT		(1 << 5)
@@ -69,7 +69,7 @@ typedef  uint8_t grp_name_t;
 #define grp_name2indx(grp_name) (grp_name - 1)
 
 
-#define FHT_GROUPS_DIM                      8  // maximum number of groups = dimension of groups array (so the maximal group index is FHT_GROUPS_DIM-1)
+#define FHT_GROUPS_DIM                      20  // maximum number of groups = dimension of groups array (so the maximal group index is FHT_GROUPS_DIM-1)
 static volatile grp_indx_t g_groups_num  = 1;  // currently used number of groups (initial 1 is overwiten by fht groups or value loaded from eeprom)
 
 void fht_init(void);
