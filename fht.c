@@ -38,8 +38,8 @@
 #include "si443x_min.h"
 #include "fht.h"
 #include "fht_eeprom.h"
-#include "DS18x20.h"
-#include "temp.h"
+//#include "DS18x20.h"
+//#include "temp.h"
 
 /*! Number of ticks to remain in sync mode (must be even) */
 #define SYNC_TICKS		240
@@ -478,12 +478,12 @@ void fht_tick_grp(grp_indx_t group)
 
     if (g_slot_count[group] == PERIOD_BASE + slot - 4) {
       //DPRINTF("Four ticks before the group %u timeslot (tick=%u) free mem is %u,  requesting temperatures measurement.\n",  grp_indx2name(group), g_ticks, freeRam());
-      temp_request_start();
+      //temp_request_start();
     }
     else if (g_slot_count[group] == PERIOD_BASE + slot - 2) {
       //DPRINTF("Two  ticks before the group %u timeslot (tick=%u) free mem is %u, temperatures are:\n",  grp_indx2name(group), g_ticks, freeRam());
       //PRINTF("Two ticks before the group %u timeslot temperatures (tick=%u) are:\n",  grp_indx2name(group), g_ticks);
-      temp_request_print();
+      //temp_request_print();
     }
     else if (g_slot_count[group] == PERIOD_BASE + slot) {
       /* This is our timeslot - SEND the stored MESSAGE */

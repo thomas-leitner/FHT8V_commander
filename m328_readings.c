@@ -2,7 +2,7 @@
 
 
 #include "common.h"
-#include "temp.h"
+//#include "temp.h"
 
 
 #include <Arduino.h> // ???
@@ -47,9 +47,9 @@ Print m328 readings
 
 void m328_print_readings(void) {
   long temp, vcc;
-  temp = m328_read_Temp();
+  //temp = m328_read_Temp();
   vcc = m328_read_Vcc();
   
-  MSG_TMP("LOCAL value='"); temp_print_value_long(temp,10000);  PRINTF("' unit='C' dev_type='m328'\n");
+  //MSG_TMP("LOCAL value='"); temp_print_value_long(temp,10000);  PRINTF("' unit='C' dev_type='m328'\n");
   MSG("VCC LOCAL value='%ld' unit='mV' dev_type='m328'\n", vcc);
 }

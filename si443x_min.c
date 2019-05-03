@@ -34,7 +34,7 @@
 #include "si443x_min.h"
 #include "board.h"
 #include "common.h"
-#include "temp.h"
+//#include "temp.h"
 
 static int radioStatus = 1 ; // 0=OK 1=not initialized 2=failed
 
@@ -560,36 +560,5 @@ void si443x_dump(void)
 }
 
 
-/* get temperature
-   temp = return_value * 0.5 - 64
-*/
-int16_t si443x_get_temperature(void) {
-  
-        cli();
-        // set adc input and reference
-        si443x_write8(0x0f, 0x00 | (1 << 6) | (1 << 5) | (1 << 4));
-        // set temperature range -64 to 64 C, ADC8 LSB: 0.5 C
-        si443x_write8(0x12, 0x00 | (1 << 5));
-        // adcstart
-        si443x_write8(0x0f, 0x00 | (1 << 7));
-        // wait for adc_done
-        while (!si443x_read8(0x0f) & (1 << 7));
-        // get adc value
-        uint8_t raw_temp = si443x_read8(0x11); // temp in C = raw_temp * 0.5 - 64
-        sei();
-        // return value must be divided by 10 to obtain temp in Celsius
-        if (raw_temp == 255) { return TEMP_NA ;} 
-        else { return( (raw_temp * 5) - 640); }
-}
 
-/*
-print the on-chip sensor temperature to the console
-*/
-int16_t si443x_temp_print(void)
-{
-   int16_t t10 = si443x_get_temperature();
-   // print data message
-   MSG_TMP("LOCAL value='"); temp_print_value(t10); PRINTF("' unit='C' raw='%x' dev_type='si443'\n", t10);   
-   
-   return (t10);
-}
+

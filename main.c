@@ -30,7 +30,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "DS18x20.h"
+//#include "DS18x20.h"
 
 #include "si443x_min.h"
 #include "fht.h"
@@ -39,7 +39,7 @@
 #include "board.h"
 #include "common.h"
 
-#include "temp.h"
+//#include "temp.h"
 
 
 /*************************************************/
@@ -213,7 +213,7 @@ static int fht_handler(cli_t *ctx, void *arg, int argc, char **argv)
 
 static int temp_handler(cli_t *ctx, void *arg, int argc, char **argv)
 {
-  temp_print(); // TODO: Use m328 reading if Dallas not available?
+  //temp_print(); // TODO: Use m328 reading if Dallas not available?
   return 0;
 }
 

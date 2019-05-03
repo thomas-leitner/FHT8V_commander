@@ -1,9 +1,9 @@
 
-#include <OneWire.h>
-#include <DallasTemperature.h>
+//#include <OneWire.h>
+//#include <DallasTemperature.h>
 
 
-#include "temp.h"
+//#include "temp.h"
 
 extern "C" {
   int fhtsetup();
@@ -12,7 +12,7 @@ extern "C" {
 
 void setup() {   
   fhtsetup();
-  temp_init();
+  //temp_init();
 }
 
 void loop() {
