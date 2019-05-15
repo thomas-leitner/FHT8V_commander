@@ -226,10 +226,10 @@ int fhtsetup(void)
   // Set up port directions and load initial values/enable pull-ups
   PORTB = PORTB_VAL;
   PORTC = PORTC_VAL;
-  PORTD = PORTD_VAL;
+  //PORTD = PORTD_VAL;
   DDRB = DDRB_VAL;
   DDRC = DDRC_VAL;
-  DDRD = DDRD_VAL;
+  //DDRD = DDRD_VAL;
 
   debug_init();
   
@@ -249,7 +249,7 @@ int fhtsetup(void)
   PRINTF("System clock = %lu Hz\n", F_CPU);
   PRINTF("Reset status = 0x%X\n", mcustatus);
 
-  m328_print_readings();
+  //m328_print_readings();
 
   /* Configure tick interrupt for half second from internal
    * 8 MHz clock using timer 1 */
@@ -311,4 +311,3 @@ int main(void)
 	fhtloop();
 }
 */
-

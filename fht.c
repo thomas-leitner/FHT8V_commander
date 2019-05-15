@@ -407,7 +407,7 @@ void fht_print(void) {
   PRINTF("Uptime in ticks: %u\n", g_ticks);
   // unsigned log upt = millis()/1000;
   // print_uptime(upt);
-  m328_print_readings();
+  //m328_print_readings();
   if (si443x_status() == 0) {
     LOG_FHT("1 RADIO ok\n");
     si443x_dump();
@@ -653,6 +653,3 @@ void fht_test(void)
   //  hexdump((uint8_t*)&msg, sizeof(msg));
   //  msgdump(&msg);
 }
-
-
-

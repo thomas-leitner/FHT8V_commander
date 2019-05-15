@@ -39,9 +39,9 @@
 
 /* Dallas DS18x20 temperature chip pin */
 // In <OneWire.h> notation!
-#define ONE_WIRE_BUS 2 // Data wire is plugged into port 3 on the Arduino (ATmega328 chip port D3 pin 5)
+//#define ONE_WIRE_BUS 2 // Data wire is plugged into port 3 on the Arduino (ATmega328 chip port D3 pin 5)
 
-#define LED_TRX D5
+//#define LED_TRX D5
 
 
 //#define TRX_SDN			C,5,1 // may be connected directly to the ground thus B0 is available for general use
@@ -63,10 +63,10 @@
 #define DEBUG_RXD			D,0,1
 #define DEBUG_TXD			D,1,1
 // D2 is used for OneWire
-#define D3					D,3,1
-#define D5					D,5,1
-#define D6					D,6,1
-#define D7					D,7,1
+//#define D3					D,3,1
+//#define D5					D,5,1
+//#define D6					D,6,1
+//#define D7					D,7,1
 
 /*
  * Input definitions for each hardware port
