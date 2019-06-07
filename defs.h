@@ -3,7 +3,8 @@
 */
 
 #ifndef DEBUG 
-#define DEBUG 1
+#define DEBUG 0
+
 # warning tweaking a little
 // missing defines in Arduino IDE
 

@@ -76,8 +76,8 @@ typedef enum {
 
 
 // classic old-style messages
-#define MSG_TMP(a,...)                   { printf_P(PSTR("MSG TMP " a), ##__VA_ARGS__); }
-#define LOG_TMP(a,...)                   { printf_P(PSTR("LOG TMP " a), ##__VA_ARGS__); }
+//#define MSG_TMP(a,...)                   { printf_P(PSTR("MSG TMP " a), ##__VA_ARGS__); }
+//#define LOG_TMP(a,...)                   { printf_P(PSTR("LOG TMP " a), ##__VA_ARGS__); }
 
 //#define MSG_FHT(a,...)                   { printf_P(PSTR("MSG FHT " a), ##__VA_ARGS__); }
 #define LOG_FHT(a,...)                   { printf_P(PSTR("LOG FHT " a), ##__VA_ARGS__); }
