@@ -26,7 +26,6 @@
  * It is not extensively tested and is primarily a proof of concept.
  *
  */
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
@@ -38,6 +37,7 @@
 #include "si443x_min.h"
 #include "fht.h"
 #include "fht_eeprom.h"
+#include "global.h"
 //#include "DS18x20.h"
 //#include "temp.h"
 
@@ -499,12 +499,46 @@ void fht_tick_grp(grp_indx_t group)
 
       // transmit message
       fht_transmit(group);
-
-      /* Set the repeat flag for next time */
       (g_message[group]).command |= FHT_REPEAT;
+      
+
+        if(setbattwarn==1){
+          (g_message[group]).command |= FHT_BATT_WARN;  
+        }
+        //else{
+            //(g_message[group]).command = FHT_EXT_PRESENT | FHT_SYNC_SET;
+            //(g_message[group]).command |= FHT_REPEAT;                      //FHT_EXT_PRESENT;
+        //}
+        
+      
+        
+        
     }
   }
 }
+
+
+
+
+
+void disablebattwarn(grp_indx_t group)
+{
+  grp_indx_t g;
+  for (g = 0; g < g_groups_num; g++)
+    (g_message[g]).command = FHT_EXT_PRESENT;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 void fht_enqueue(grp_indx_t group, uint8_t address, uint8_t command, uint8_t value)
 {

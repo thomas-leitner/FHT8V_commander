@@ -30,7 +30,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#include "DS18x20.h"
 
 #include "si443x_min.h"
 #include "fht.h"
@@ -38,8 +37,9 @@
 
 #include "board.h"
 #include "common.h"
+#include "global.h"
 
-//#include "temp.h"
+
 
 
 /*************************************************/
@@ -150,12 +150,49 @@ static int fht_handler(cli_t *ctx, void *arg, int argc, char **argv)
     fht_sync(group);
   } else if (strcmp_PF(argv[1], PSTR("set")) == 0) {
     // *** SET ***
-    if (argc < 4) return 1;
-    /* 'set' takes one argument which is the valve position in the
+    if (argc < 3) return 1;
+     /* 'set' takes one argument which is the valve position in the
      * range 0 to 255 */
     value = atoi(argv[3]);
     LOG_CLI("Setting group %u valve position to %u\n", groupname, value);
     fht_enqueue(group, 0, FHT_VALVE_SET, value);
+ 
+
+
+  
+  
+  
+  } else if (strcmp_PF(argv[1], PSTR("warn")) == 0) {
+    // *** WARN ***
+    if (argc < 2) return 1;
+     /* 'warn' takes one argument on / off */
+    if (strcmp_PF(argv[2], PSTR("on")) == 0) {
+       setbattwarn = 1;
+       LOG_CLI("setting batt\n")
+       }
+    if (strcmp_PF(argv[2], PSTR("off")) == 0) {
+       setbattwarn = 0;
+       disablebattwarn();
+       LOG_CLI("disabling batt\n")
+       }
+   
+    
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+   ///////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
   } else if (strcmp_PF(argv[1], PSTR("offset")) == 0) {
     // *** OFFSET ***
     // not properly tested yet
@@ -222,7 +259,7 @@ int fhtsetup(void)
   uint8_t	mcustatus = MCUSR;
 
   MCUSR = 0;
-
+  //setbattwarn = 0;
   // Set up port directions and load initial values/enable pull-ups
   PORTB = PORTB_VAL;
   PORTC = PORTC_VAL;
@@ -239,17 +276,7 @@ int fhtsetup(void)
   PRINTF("Debug level not defined.\n");
 #endif
 
-  PRINTF("\n\n"
-         "FHT valve communication example for RFM22/23\n"
-         "(C) 2013 Mike Stirling\n"
-         "http://www.mikestirling.co.uk\n\n"
-         "(C) 2013 Hynek Baran\n"
-         "https://github.com/HynekBaran/FHT8V\n\n"
-         "Sketch date and time" __DATE__ " " __TIME__ "\n");
-  PRINTF("System clock = %lu Hz\n", F_CPU);
-  PRINTF("Reset status = 0x%X\n", mcustatus);
-
-  //m328_print_readings();
+ 
 
   /* Configure tick interrupt for half second from internal
    * 8 MHz clock using timer 1 */
