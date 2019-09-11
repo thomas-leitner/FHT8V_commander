@@ -42,7 +42,8 @@
 //#include "temp.h"
 
 /*! Number of ticks to remain in sync mode (must be even) */
-#define SYNC_TICKS		240
+//standard 240 ticks
+#define SYNC_TICKS		240  
 /*! Period (in ticks) for timeslot 0 - the period increases by
  * one tick for each higher slot */
 #define PERIOD_BASE		230
@@ -78,28 +79,28 @@ static void cmddump(fht_msg_t *msg)
 {
   switch (msg->command & 0xf) {
     case FHT_SYNC_SET:
-      printf_P(PSTR("SYNC_SET %u"), msg->extension);
+      printf_P(PSTR("SS %u"), msg->extension);
       break;
     case FHT_VALVE_OPEN:
-      printf_P(PSTR("VALVE_OPEN"));
+      printf_P(PSTR("VO"));
       break;
     case FHT_VALVE_CLOSE:
-      printf_P(PSTR("VALVE_CLOSE"));
+      printf_P(PSTR("VC"));
       break;
     case FHT_VALVE_SET:
-      printf_P(PSTR("VALVE_SET %u"), msg->extension);
+      printf_P(PSTR("VS %u"), msg->extension);
       break;
     case FHT_OFFSET:
-      printf_P(PSTR("OFFSET %d"), msg->extension);
+      printf_P(PSTR("O"), msg->extension);
       break;
     case FHT_DESCALE:
-      printf_P(PSTR("DESCALE"));
+      printf_P(PSTR("D"));
       break;
     case FHT_SYNC:
-      printf_P(PSTR("SYNC %u"), msg->extension);
+      printf_P(PSTR("S %u"), msg->extension);
       break;
     case FHT_TEST:
-      printf_P(PSTR("TEST"));
+      printf_P(PSTR("T"));
       break;
     default:
       printf_P(PSTR("cmd 0x%hu ext 0x%hu"), msg->command & 0xf, msg->extension);
@@ -110,11 +111,11 @@ static void cmddump(fht_msg_t *msg)
 static void cmdflagsdump(fht_msg_t *msg)
 {
   if (msg->command & FHT_REPEAT)
-    printf_P(PSTR("RPT "));
+    printf_P(PSTR("R "));
   if (msg->command & FHT_EXT_PRESENT)
-    printf_P(PSTR("EXT "));
+    printf_P(PSTR("E "));
   if (msg->command & FHT_BATT_WARN)
-    printf_P(PSTR("ENABLE_LOW_BATT_WARNING "));
+    printf_P(PSTR("B"));
 }
 
 static void msgdump(fht_msg_t *msg)
@@ -337,7 +338,7 @@ static void fht_transmit(uint8_t group)
   LED_TRX_OFF();
 
   // Log the trasmitted message
-  LOG_FHT("0 RFM_TX ");
+  LOG_FHT("0 TX ");
   msg_enq_print(group, 0);
   PRINTF("\n");
 }
@@ -375,9 +376,9 @@ void fht_set_groups_num(grp_name_t groupsnum)
 
 void msg_enq_print(grp_indx_t group, int8_t verb)
 {
-  PRINTF("CMD='"); cmddump(&(g_message[group]));      PRINTF("' ");
-  PRINTF("FLG='"); cmdflagsdump(&(g_message[group])); PRINTF("' ");
-  PRINTF("grp='%d' adr='%u' ", grp_indx2name(group),  g_message[group].address);
+  PRINTF("C='"); cmddump(&(g_message[group]));      PRINTF("' ");
+  PRINTF("F='"); cmdflagsdump(&(g_message[group])); PRINTF("' ");
+  PRINTF("G='%d'", grp_indx2name(group));
   if (verb > 0) {
     PRINTF(" hc='%u%u' cmdL='0x%hu' cmdU='0x%hu' ext='0x%hu' ",
            g_message[group].hc1, g_message[group].hc2,
@@ -397,7 +398,7 @@ void fht_print(void) {
 
   PRINTF("\n*** Messages enqueued:\n");
   for (g = 0; g < g_groups_num; g++) {
-    LOG_FHT("1 RFM_TQ ");
+    LOG_FHT("1 TQ ");
     msg_enq_print(g, DEBUG);
     PRINTF("\n");
   }
@@ -555,7 +556,7 @@ void fht_enqueue(grp_indx_t group, uint8_t address, uint8_t command, uint8_t val
     (g_message[group]).command = FHT_EXT_PRESENT | (command & 0xf);
     (g_message[group]).extension = value;
     sei();
-    LOG_FHT("0 RFM_TQ ");
+    LOG_FHT("0 TQ ");
     msg_enq_print(group, 0);
     PRINTF("\n");
   }
@@ -609,18 +610,18 @@ void fht_sync(grp_indx_t group)
       fht_sync_grp(g);
     /* Wait for repeat bit to be set - this indicates that the first real command
      		 * has been sent following the sync procedure */
-    LOG_FHT("1 RFM_TX SYNC Waiting for ALL groups sync...\n");
+    LOG_FHT("1 TX SYNC Waiting for ALL groups sync...\n");
     while (!fht_all_groups_synced());
-    LOG_FHT("1 RFM_TX SYNC Sync of all groups complete\n");
+    LOG_FHT("1 TX SYNC Sync of all groups complete\n");
   }
   else {
     // single group
     fht_sync_grp(group);
     /* Wait for repeat bit to be set - this indicates that the first real command
      		 * has been sent following the sync procedure */
-    LOG_FHT("1 RFM_TX SYNC Waiting for group %d sync...\n", grp_indx2name(group));
+    LOG_FHT("1 TX SYNC Waiting for group %d sync...\n", grp_indx2name(group));
     while (!fht_group_synced(group));
-    LOG_FHT("1 RFM_TX SYNC Sync group %d complete\n", grp_indx2name(group));
+    LOG_FHT("1 TX SYNC Sync group %d complete\n", grp_indx2name(group));
   }
 }
 

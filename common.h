@@ -80,7 +80,7 @@ typedef enum {
 //#define LOG_TMP(a,...)                   { printf_P(PSTR("LOG TMP " a), ##__VA_ARGS__); }
 
 //#define MSG_FHT(a,...)                   { printf_P(PSTR("MSG FHT " a), ##__VA_ARGS__); }
-#define LOG_FHT(a,...)                   { printf_P(PSTR("LOG FHT " a), ##__VA_ARGS__); }
+#define LOG_FHT(a,...)                   { printf_P(PSTR("" a), ##__VA_ARGS__); }
 
 #define LOG_CLI(a,...)                   { printf_P(PSTR("CLI " a), ##__VA_ARGS__); }
 
